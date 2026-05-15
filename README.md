@@ -75,7 +75,6 @@ Optional: override the endpoint explicitly. Normally you do not need this.
 ```bash
 export GOOGLE_CLOUD_SPEECH_ENDPOINT="https://europe-west4-speech.googleapis.com"
 ```
-
 ## 6. Run the example
 
 ```bash
