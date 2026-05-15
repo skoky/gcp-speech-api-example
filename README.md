@@ -92,7 +92,66 @@ Using endpoint: https://europe-west4-speech.googleapis.com
 Using recognizer: projects/your-project-id/locations/europe-west4/recognizers/_
 ```
 
-## 7. Common problems
+## 7. Change language and uploaded phrase context
+
+Both settings are in [src/main.rs](/home/skokanl/mywork/gemini-test/src/main.rs).
+
+### Change the recognition language
+
+In `RecognitionConfig`, update `language_codes`:
+
+```rust
+language_codes: vec!["cs-CZ".to_owned()],
+```
+
+Examples:
+
+```rust
+language_codes: vec!["en-US".to_owned()],
+language_codes: vec!["de-DE".to_owned()],
+language_codes: vec!["sk-SK".to_owned()],
+```
+
+### Change the uploaded phrase context
+
+The example sends inline phrase hints through a `PhraseSet`. Update the items inside:
+
+```rust
+phrases: vec![
+    phrase_set::Phrase {
+        value: "Dobrý den".to_owned(),
+        boost: 15.0,
+    },
+    phrase_set::Phrase {
+        value: "Česká republika".to_owned(),
+        boost: 15.0,
+    },
+    phrase_set::Phrase {
+        value: "umělá inteligence".to_owned(),
+        boost: 15.0,
+    },
+],
+```
+
+What to change:
+
+- `value`: the phrase you want Google Speech-to-Text to favor
+- `boost`: how strongly that phrase should be preferred
+
+Practical guidance:
+
+- keep phrases short and specific
+- use phrases people are actually likely to say
+- start with `boost: 10.0` to `20.0`
+- too much boost can hurt recognition for normal speech
+
+After changing language or phrase hints, just rerun:
+
+```bash
+cargo run
+```
+
+## 8. Common problems
 
 ### `Your default credentials were not found`
 
